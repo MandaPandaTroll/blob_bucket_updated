@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 779859742907459550}
   - component: {fileID: 779859742907459549}
   - component: {fileID: 7913196591768817145}
+  - component: {fileID: -6584019194419636235}
   m_Layer: 6
   m_Name: brainblob
   m_TagString: Predator
@@ -274,3 +275,15 @@ MonoBehaviour:
   basalMet: 0.1
   protein: 0
   proteinToReproduce: 256
+--- !u!114 &-6584019194419636235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711403674044451826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e09366a7a533247bda9b6cfb7427d945, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
