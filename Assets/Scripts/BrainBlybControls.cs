@@ -77,6 +77,7 @@ System.Random rndA = new System.Random();
     public float turnTorque;
     public float turnTorqueAllele1;
     public float turnTorqueAllele2;
+    public float sizeAllele1, sizeAllele2, sizeGene;
 
     public float lookDistance;
     public float  energyToReproduce;
@@ -103,13 +104,15 @@ System.Random rndA = new System.Random();
     public float basalMet;
     public int protein;
     public int proteinToReproduce;
-
+    public int NH4;
         nutGrid m_nutgrid;
 
 
     // Start is called before the first frame update
     void Start()
-    {   rCount = 0;
+    {   
+        age = 0;
+        rCount = 0;
         eaten = false;
         alive = true;
         hasReproduced = false;
@@ -141,12 +144,11 @@ System.Random rndA = new System.Random();
     }
 
 
-
+    float NH4_Timer;
     // Update is called once per frame
     void LateUpdate()
     {   
-        Vector2 brownian = new Vector2 (Random.Range(-1.0f,1.0f),Random.Range(-1.0f,1.0f));
-        rb.AddForce(brownian);
+        
         if(Time.time < 0.1f && initDiversity != 0.0f){InitDiversifier(); }
         
         pEnergy = energy;
@@ -164,12 +166,26 @@ System.Random rndA = new System.Random();
         }
     if(alive == true)
     {
+        NH4_Timer += Time.deltaTime;
+        if (NH4_Timer >= 1f && protein > 1)
+        {
+            NH4 +=2;
+            protein -= 2;
+            NH4_Timer = 0f;
+
+        }
+        //Ammonia secretion
+        if(NH4 >= 32){
+            int posval = m_nutgrid.GetValue(transform.position);
+                m_nutgrid.SetValue(transform.position, posval + NH4);
+                NH4 = 0;
+        }
         eCost = rb.mass/eCostCo;
         energy -= basalMet;
         int dC = (int) ( (lifeLength*Mathf.Pow((3f*lifeLength/age),2f)) - (9f*lifeLength) );
         deathDice = Random.Range(1,dC);
                 // rCo = 10 + (L/a)^2
-       int rCo = 10 + (int)Mathf.Pow((lifeLength/age),2f); 
+       int rCo = 10 + (int)Mathf.Pow((lifeLength/(age+1)),2f); 
         
         rDice = Random.Range(1, rCo);
         
@@ -222,7 +238,7 @@ System.Random rndA = new System.Random();
             int posval = m_nutgrid.GetValue(transform.position);
                 m_nutgrid.SetValue(transform.position, posval + 1);
                 protein -= 1;
-            if(energy <= 0f || protein <= 0)
+            if(energy <= 0f && protein <= 0)
             {
                 Destroy(this.gameObject,0.2f);
             }
@@ -236,12 +252,13 @@ System.Random rndA = new System.Random();
                 {   
                     if(booper.tag == ("ApexPred"))
                     {
-                        energy -= energy;
-                        protein -= protein;
+                        energy = 0;
+                        protein = 0;
                     }
 
                     energy = 0;
                     protein = 0;
+                    NH4 = 0;
                 }
 
             if( alive == true){
@@ -251,16 +268,19 @@ System.Random rndA = new System.Random();
                     {
                         energy += (booper.GetComponent<BrainBlobControls>().pEnergy);
                         protein += (booper.GetComponent<BrainBlobControls>().protein);
+                        NH4 += (booper.GetComponent<BrainBlobControls>().NH4);
                     }
                     if(booper.layer == 7)
                     {
                         energy += (booper.GetComponent<BrainBlubControls>().pEnergy);
                         protein += (booper.GetComponent<BrainBlubControls>().protein);
+                        NH4 += (booper.GetComponent<BrainBlubControls>().NH4);
                     }
                     if(booper.layer == 8)
                     {
                         energy += (booper.GetComponent<BrainBlybControls>().pEnergy);
                         protein += (booper.GetComponent<BrainBlybControls>().protein);
+                        NH4 += (booper.GetComponent<BrainBlybControls>().NH4);
                     }
                     
                     nom = true; 
@@ -291,8 +311,12 @@ System.Random rndA = new System.Random();
                     moveAllele1 = (moveAllele1 + mate.moveAllele1)/2.0f;
                     moveAllele2 = (moveAllele2 + mate.moveAllele2)/2.0f;
 
-                    turnTorqueAllele1 = (turnTorqueAllele1 + mate.turnTorqueAllele1)/2f;
-                    turnTorqueAllele2 = (turnTorqueAllele2 + mate.turnTorqueAllele2)/2f;
+                    turnTorqueAllele1 = (turnTorqueAllele1 + mate.turnTorqueAllele1)/2;
+                    turnTorqueAllele2 = (turnTorqueAllele2 + mate.turnTorqueAllele2)/2;
+
+                    sizeAllele1 = (sizeAllele1 + mate.sizeAllele1)/2f;
+                    sizeAllele2 = (sizeAllele2 + mate.sizeAllele2)/2f;
+                    sizeGene = (sizeAllele1+sizeAllele2)/2f;
                     
                     lookDistance = (lookDistance + mate.lookDistance)/2f;
  
@@ -441,6 +465,9 @@ System.Random rndA = new System.Random();
                     blueAllele1  += (float)randNosA[14]*rndA.Next(2)*0.01f;
                     blueAllele2  += (float)randNosA[15]*rndA.Next(2)*0.01f;
 
+                    sizeAllele1 += (float)(rndA.Next(-1,2))*0.01f;
+                    sizeAllele2 += (float)(rndA.Next(-1,2))*0.01f;
+
                     conjAge += (float)randNosA[16]*rndA.Next(2);
 
 
@@ -498,7 +525,7 @@ System.Random rndA = new System.Random();
                 
                 float x = energy/10000f;
                 float k = 0.7f;
-                sigmoid = 4f/ (1f+ Mathf.Exp(-k*(x-1.5f)));
+                sigmoid = sizeGene/ (1f+ Mathf.Exp(-k*(x-1.5f)));
                 newSize = new Vector3(sigmoid,sigmoid,sigmoid);
                 transform.localScale = newSize;
                     maxEnergy = sigmoid*25000f;
@@ -557,6 +584,9 @@ System.Random rndA = new System.Random();
                     lookDistance += (float)rndA.Next(-1,2)*initDiversity;
                     energyToReproduce += (float)rndA.Next(-1,2)*initDiversity;
 
+                    sizeAllele1 += (float)(rndA.Next(-1,2)*initDiversity)*0.01f;
+                    sizeAllele2 += (float)(rndA.Next(-1,2)*initDiversity)*0.01f;
+                    sizeGene = (sizeAllele1+sizeAllele2)/2f;
 
                     intron1 += (float)(rndA.Next(-1,2)*initDiversity);
                     intron2 += (float)(rndA.Next(-1,2)*initDiversity);

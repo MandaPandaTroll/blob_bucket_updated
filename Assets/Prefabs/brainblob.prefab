@@ -10,14 +10,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1711403674044451830}
   - component: {fileID: 1711403674044451831}
+  - component: {fileID: 8638604697978746356}
+  - component: {fileID: 7913196591768817145}
   - component: {fileID: 1711403674044451828}
   - component: {fileID: 1711403674044451829}
   - component: {fileID: 779859742907459548}
   - component: {fileID: 779859742907459551}
   - component: {fileID: 779859742907459550}
   - component: {fileID: 779859742907459549}
-  - component: {fileID: 7913196591768817145}
-  - component: {fileID: -6584019194419636235}
   m_Layer: 6
   m_Name: brainblob
   m_TagString: Predator
@@ -90,6 +90,178 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8638604697978746356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711403674044451826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 281087887ede349089232a6c788cdf00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pythagDist: 0
+  lineageID: []
+  greenAllele1: 0
+  greenAllele2: 0
+  greenGene: 0
+  redAllele1: 1
+  redAllele2: 1
+  redGene: 0
+  blueAllele1: 1
+  blueAllele2: 1
+  blueGene: 0
+  lookDistAllele1: 128
+  lookDistAllele2: 128
+  lookDistance: 128
+  turnTorqueAllele1: 128
+  turnTorqueAllele2: 128
+  turnTorque: 128
+  e2repAllele1: 4096
+  e2repAllele2: 4096
+  energyToReproduce: 4096
+  moveAllele1: 128
+  moveAllele2: 128
+  moveForce: 128
+  lifeLengthAllele1: 128
+  lifeLengthAllele2: 128
+  lifeLength: 128
+  sizeAllele1: 0
+  sizeAllele2: 0
+  sizeGene: 0
+  mutate: 0
+  numMutations: 0
+  giveLocus:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  receiveLocus:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  mother: {fileID: 0}
+  chromoPairs: 0
+  basePairs: 0
+  randGenome: 0
+  loSite: 0
+  cNum: 0
+  locus: 0
+--- !u!114 &7913196591768817145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711403674044451826}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db382102a72e14415ac543b43578445d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  geneticDistance: 0
+  rCount: 0
+  hasReproduced: 0
+  alive: 1
+  eaten: 0
+  nom: 0
+  eCostCo: 2500
+  speciationDistance: 0.5
+  energy: 8192
+  pEnergy: 0
+  maxEnergy: 40000
+  eCost: 0
+  conjAge: 75
+  age: 0
+  statAge: 0
+  moveAllele1: 178.1948
+  moveAllele2: 206.1074
+  moveForce: 190
+  turnTorque: 101.1475
+  turnTorqueAllele1: 101.1475
+  turnTorqueAllele2: 101.1475
+  sizeAllele1: 0
+  sizeAllele2: 0
+  sizeGene: 0
+  lookDistAllele1: 100
+  lookDistAllele2: 100
+  lookDistance: 200
+  e2repAllele1: 512
+  e2repAllele2: 512
+  energyToReproduce: 16384
+  lifeLengthAllele1: 100
+  lifeLengthAllele2: 100
+  lifeLength: 500
+  intron1: 100
+  intron2: 100
+  intron3: 100
+  intron4: 100
+  redGene: 1
+  greenGene: 0
+  blueGene: 1
+  redAllele1: 1
+  redAllele2: 1
+  greenAllele1: 0
+  greenAllele2: 0
+  blueAllele1: 1
+  blueAllele2: 1
+  initDiversity: 0
+  rDice: 0
+  generation: 0
+  deadLayer: 9
+  basalMet: 0.1
+  protein: 0
+  proteinToReproduce: 1024
+  NH4: 0
 --- !u!58 &1711403674044451828
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -219,71 +391,3 @@ MonoBehaviour:
   m_ObservationStacks: 1
   rayHitColor: {r: 1, g: 0, b: 0, a: 1}
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &7913196591768817145
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711403674044451826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db382102a72e14415ac543b43578445d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  geneticDistance: 0
-  rCount: 0
-  hasReproduced: 0
-  alive: 1
-  eaten: 0
-  nom: 0
-  eCostCo: 2500
-  speciationDistance: 0.5
-  energy: 10000
-  pEnergy: 0
-  maxEnergy: 40000
-  eCost: 0
-  conjAge: 75
-  age: 0
-  statAge: 0
-  moveAllele1: 178.1948
-  moveAllele2: 206.1074
-  moveForce: 190
-  turnTorque: 101.1475
-  turnTorqueAllele1: 101.1475
-  turnTorqueAllele2: 101.1475
-  lookDistance: 200
-  energyToReproduce: 20000
-  lifeLength: 500
-  intron1: 100
-  intron2: 100
-  intron3: 100
-  intron4: 100
-  redGene: 1
-  greenGene: 0
-  blueGene: 1
-  redAllele1: 1
-  redAllele2: 1
-  greenAllele1: 0
-  greenAllele2: 0
-  blueAllele1: 1
-  blueAllele2: 1
-  initDiversity: 0
-  rDice: 0
-  generation: 0
-  deadLayer: 9
-  basalMet: 0.1
-  protein: 0
-  proteinToReproduce: 256
---- !u!114 &-6584019194419636235
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1711403674044451826}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e09366a7a533247bda9b6cfb7427d945, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

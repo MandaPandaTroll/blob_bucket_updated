@@ -251,6 +251,9 @@ MonoBehaviour:
   turnTorque: 101.1475
   turnTorqueAllele1: 101.1475
   turnTorqueAllele2: 101.1475
+  sizeAllele1: 2
+  sizeAllele2: 2
+  sizeGene: 2
   lookDistance: 200
   energyToReproduce: 20000
   lifeLength: 500
@@ -273,4 +276,5 @@ MonoBehaviour:
   deadLayer: 9
   basalMet: 0.1
   protein: 0
-  proteinToReproduce: 256
+  proteinToReproduce: 1024
+  NH4: 0

@@ -401,7 +401,7 @@ List <string> codon;
             geneticColor.b = blueGene;
         
                     m_SpriteRenderer.color = geneticColor;
-            energy += 64f*greenGene + 16f * redGene;
+            energy += 32f*greenGene + 16f * redGene;
             energyTick = 0.0f;
             
                     redGene = Mathf.Clamp(((redAllele1 + redAllele2)/2.0f), 0.00f,1.00f);

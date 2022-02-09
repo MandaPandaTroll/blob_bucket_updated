@@ -92,7 +92,8 @@
      <Compile Include="Assets/CodeMonkey/Utils/FunctionPeriodic.cs" />
      <Compile Include="Assets/BlibGenome.cs" />
      <Compile Include="Assets/Scripts/BlubControls.cs" />
-     <Compile Include="Assets/PredatorGenome.cs" />
+     <Compile Include="Assets/BlobGenome.cs" />
+     <Compile Include="Assets/SettingsMenu.cs" />
      <None Include="Assets/CodeMonkey/README.txt" />
     <Reference Include="UnityEngine">
         <HintPath>/Applications/Unity/Unity.app/Contents/Managed/UnityEngine/UnityEngine.dll</HintPath>

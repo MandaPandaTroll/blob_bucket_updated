@@ -52,12 +52,16 @@ RED = CGT - GAA - GAT
       AGA
       AGG
 
+      "C", "G", "C", "G", "A", "A", "G", "A", "T"
+
 GRN = GGT - CGT - AAT
       GGC - CGC - AAC
       GGA - CGA   
       GGG - CGG
             AGA
             AGG
+
+     "G", "G", "T", "C", "G", "T", "A", "A", "T"
 
 LLY = CTT - CTT - TAT
       CTC - CTC - TAC
@@ -66,6 +70,8 @@ LLY = CTT - CTT - TAT
       TTA - TTA - –––
       TTG - TTG - –––
 
+      "C", "T", "T", "C", "T", "T", "T", "A", "T"
+
 
 MVV = ATG - GTT - GTT
       ––– - GTC - GTC
@@ -73,6 +79,7 @@ MVV = ATG - GTT - GTT
       ––– - GTG - GTG
       ––– - ––– - –––
       ––– - ––– - –––
+      "A", "T", "G", "G", "T", "T", "G", "T", "T"
 
 TRN = ACT - CGT - AAT
       ACC - CGC - AAC
@@ -80,7 +87,7 @@ TRN = ACT - CGT - AAT
       ACG - CGG
             AGA
             AGG
-
+    "A", "C", "T", "C", "G", "T", "A", "A", "T"
 REP = CGT - GAA - CCT
       CGC - GAG - CCC
       CGA - ––– - CCA
@@ -88,12 +95,15 @@ REP = CGT - GAA - CCT
       AGA
       AGG
 
+ "A", "T", "G", "C", "G", "T", "G", "A", "A", "C", "C", "T", "C", "G", "T", "G", "A", "A", "C", "C", "T", "T", "C", "T", "T", "G", "A"
 LIF = CTT - ATT - TTT
       CTC - ATC - TTC
       CTA - ATA - –––
       CTG - ––– - –––
       TTA - ––– - –––
       TTG - ––– - –––
+
+       "C", "T", "T", "A", "T", "T", "T", "T", "T"
 
            L     K     D     I     S     T     A
 LKDISTA = CTT - AAA - GAT - ATT - TCT - ACT - CGT
@@ -103,12 +113,21 @@ LKDISTA = CTT - AAA - GAT - ATT - TCT - ACT - CGT
           TTA - ––– - ––– - ––– - AGT - ––– - –––
           TTG - ––– - ––– - ––– - AGC - ––– - –––
 
-    "A", "T", "G", "C", "T", "T", "A", "A", "A", "G", "A", "T", "A", "T", "T", "T", "C", "T", "A", "C", "T", "C", "G", "T", "T", "G", "A", 
 
+    "A", "T", "G", "C", "T", "G", "A", "A", "A", "G", "A", "T", "A", "T", "T", "A", "G", "C", "A", "C", "C", "G", "C", "G", "T", "G", "A"
+    atg ctg aaa gat att agc acc gcg tga
+         T     H     I     C     C
+THICC = ACT - CAT - ATT - TGT - TGT
+        ACC - CAC - ATC - TGC - TGC
+        ACA - ––– - ATA - ––– - –––
+        ACG - ––– - ––– - ––– - –––
+        ––– - ––– - ––– - ––– - –––
+        ––– - ––– - ––– - ––– - –––
+    "A", "T", "G", "A", "C", "T", "C", "A", "T", "A", "T", "T", "T", "G", "T", "T", "G", "T", "T", "G", "A", "A", "A", "A", "A", "A", "A"
 
 */
 
-public static string red = "RED", green = "GRN",  blue = "LLY", move = "MVV", turnt = "TRN", rep = "REP", lifeL = "LIF", lookD = "LKDISTA";
+public static string red = "RED", green = "GRN",  blue = "LLY", move = "MVV", turnt = "TRN", rep = "REP", lifeL = "LIF", lookD = "LKDISTA", thicc = "THICC";
 
 
  

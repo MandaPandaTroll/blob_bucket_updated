@@ -30,14 +30,21 @@ Detector detector;
 int smellMask;
 Vector2 closest;
 Collider2D[] smellColliders;
+BlobGenome genome;
+
+void Awake(){
+genome = this.gameObject.GetComponent<BlobGenome>();
+bctrl = gameObject.GetComponent<BrainBlobControls>();
+}
 void Start() 
 {
+    
     box = GameObject.Find("box");
     rb = GetComponent<Rigidbody2D>();
-    bctrl = gameObject.GetComponent<BrainBlobControls>();
+    
     energy = bctrl.energy;
     thisRay = GetComponent<RayPerceptionSensorComponent2D>();
-    thisRay.RayLength = bctrl.lookDistance;
+    thisRay.RayLength = ((genome.lookDistAllele1+genome.lookDistAllele2)/2f);
     nomCount = 0;
     protein = bctrl.protein;
     v = rb.velocity.magnitude/1000.0f;
@@ -45,13 +52,13 @@ void Start()
     detector = GameObject.Find("Alpha").GetComponent<Detector>();
     boxLength = box.transform.lossyScale.x;
     smellMask = LayerMask.GetMask("Prey");
-    latestLookDistance = bctrl.lookDistance;
-    MaxScaledSmellDistance = Mathf.Sqrt( Mathf.Pow((bctrl.lookDistance/4.0f),2.0f) + Mathf.Pow((bctrl.lookDistance/4.0f),2.0f) );
+    latestLookDistance = ((genome.lookDistAllele1+genome.lookDistAllele2)/2f);
+    MaxScaledSmellDistance = Mathf.Sqrt( Mathf.Pow((((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f),2.0f) + Mathf.Pow((((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f),2.0f) );
    
 }
 
-float MaxScaledSmellDistance;
-float latestLookDistance;
+float MaxScaledSmellDistance = 1f;
+float latestLookDistance = 100f;
 
 int protein;
 float v, angV;
@@ -59,8 +66,8 @@ int step;
 public override void OnEpisodeBegin(){
 step = 0;
 }
-float scaledSmellDistance, smellReward;
-Vector2 scaledClosest;
+float scaledSmellDistance = 0, smellReward = 0;
+Vector2 scaledClosest = new Vector2 (0f,0f);
 public override void CollectObservations(VectorSensor sensor)
 {
     step +=1;
@@ -70,8 +77,8 @@ if (bump == false)
 {
     extBooper = null;
 }
-Vector2 smellA = new Vector2(transform.position.x -bctrl.lookDistance/4.0f, transform.position.y -bctrl.lookDistance/4.0f);
-Vector2 smellB = new Vector2(transform.position.x +bctrl.lookDistance/4.0f, transform.position.y +bctrl.lookDistance/4.0f);
+Vector2 smellA = new Vector2(transform.position.x -((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f, transform.position.y -((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f);
+Vector2 smellB = new Vector2(transform.position.x +((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f, transform.position.y +((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f);
 smellColliders = Physics2D.OverlapAreaAll(smellA,smellB,smellMask);
 for(int i = 0; i < smellColliders.Length;i++){
 float preyDist = (smellColliders[i].transform.position - transform.position).sqrMagnitude;
@@ -81,18 +88,26 @@ minindex = i;
 }
 if (smellColliders.Length <1){closest = Vector2.zero;}
 else{closest = (smellColliders[minindex].transform.position - transform.position).normalized;}
-if(latestLookDistance != bctrl.lookDistance){
+if(latestLookDistance != ((genome.lookDistAllele1+genome.lookDistAllele2)/2f)){
     
-MaxScaledSmellDistance = Mathf.Sqrt( Mathf.Pow((bctrl.lookDistance/4.0f),2.0f) + Mathf.Pow((bctrl.lookDistance/4.0f),2.0f) );
-latestLookDistance = bctrl.lookDistance;
+MaxScaledSmellDistance = Mathf.Sqrt( Mathf.Pow((((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f),2.0f) + Mathf.Pow((((genome.lookDistAllele1+genome.lookDistAllele2)/2f)/4.0f),2.0f) );
+latestLookDistance = ((genome.lookDistAllele1+genome.lookDistAllele2)/2f);
 }
  scaledSmellDistance = closest.magnitude /MaxScaledSmellDistance;
 
-Vector2 scaledClosest =closest/MaxScaledSmellDistance;
+ scaledClosest =closest/MaxScaledSmellDistance;
 
  smellReward = (1.0f-scaledSmellDistance)/2048f;
   
 protein = bctrl.protein;
+float e2r = genome.energyToReproduce;
+float ObsAge = bctrl.age;
+if(ObsAge <0f )
+{ObsAge = 0f;}
+
+if (e2r < 1f ){e2r = 1f;}
+
+
  v = rb.velocity.magnitude/1000.0f;
  angV = rb.angularVelocity/1000.0f;
  sensor.AddObservation(scaledClosest);
@@ -101,7 +116,7 @@ sensor.AddObservation(v);
 sensor.AddObservation(angV);
 
 
-sensor.AddObservation(bctrl.energy/bctrl.energyToReproduce);
+sensor.AddObservation(bctrl.energy/e2r);
 sensor.AddObservation(bctrl.age);
 
 
@@ -132,8 +147,8 @@ hasReproduced = bctrl.hasReproduced;
 rCount = bctrl.rCount;
 
 
-    moveForce = bctrl.moveForce;
-    turnTorque = bctrl.turnTorque;
+    moveForce = genome.moveForce;
+    turnTorque = genome.turnTorque;
     forwardSignal = actionBuffers.DiscreteActions[0];
     rotSignal = actionBuffers.DiscreteActions[1];
     float fwdMag = 0;
@@ -249,7 +264,7 @@ rCount = bctrl.rCount;
 
              if (booper.tag == "Predator" && energy >= bctrl.energyToReproduce*0.75f)
             {
-             AddReward(bctrl.geneticDistance*2f);
+             AddReward(genome.pythagDist*5f);
                 
             }
 

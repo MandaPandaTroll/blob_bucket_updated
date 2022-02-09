@@ -27,6 +27,8 @@ private List<string[]> rowData = new List<string[]>();
    
 
     int sampler;
+
+
     public List <int> generation;
     public List <float> intron1;
     public List <float> intron2;
@@ -41,13 +43,19 @@ private List<string[]> rowData = new List<string[]>();
     public List <float> greenAllele2;
     public List <float> blueAllele1;
     public List <float> blueAllele2;
-    public List <float> LifeSpan;
-     public List <float> lookDistance;
+    public List <float> lifeLengthAllele1;
+    public List <float> lifeLengthAllele2;
+    public List <float> lookDistAllele1;
+    public List <float> lookDistAllele2;
+    public List <float> sizeAllele1;
+    public List <float> sizeAllele2;
+
     public List <float> turnTorqueAllele1;
     public List <float> turnTorqueAllele2;
-    public List <float> turnDice;
-    public List <float> energyToReproduce;
-    public List <float> conjAge;
+    public List <float> e2repAllele1;
+    public List <float> e2repAllele2;
+ 
+
 
     bool refCheck = false;
     bool brainCheck = false;
@@ -83,7 +91,7 @@ private List<string[]> rowData = new List<string[]>();
                 
 
 
-
+                        /*
                         if (refCheck == true)
                         {
                             for (int i = 0; i < sampleSize; i++)
@@ -101,26 +109,35 @@ private List<string[]> rowData = new List<string[]>();
                                 moveAllele1.Add(sampledBlob.moveAllele1);
                                 moveAllele2.Add(sampledBlob.moveAllele2); 
 
-                               redAllele1.Add(sampledBlob.redAllele1*10f);
-                               redAllele2.Add(sampledBlob.redAllele2*10f);
+                               redAllele1.Add(sampledBlob.redAllele1);
+                               redAllele2.Add(sampledBlob.redAllele2);
 
-                               greenAllele1.Add(sampledBlob.greenAllele1*10f);
-                               greenAllele2.Add(sampledBlob.greenAllele2*10f);
+                               greenAllele1.Add(sampledBlob.greenAllele1);
+                               greenAllele2.Add(sampledBlob.greenAllele2);
 
-                                blueAllele1.Add(sampledBlob.blueAllele1*10f);
-                                blueAllele2.Add(sampledBlob.blueAllele2*10f);
-                                LifeSpan.Add(sampledBlob.lifeLength);
+                                blueAllele1.Add(sampledBlob.blueAllele1);
+                                blueAllele2.Add(sampledBlob.blueAllele2);
+                                lifeLengthAllele1.Add(sampledBlob.lifeLengthAllele1);
+                                lifeLengthAllele2.Add(sampledBlob.lifeLengthAllele2);
                     
-                                lookDistance.Add(sampledBlob.lookDistance);
+                                lookDistAllele1.Add(sampledBlob.lookDistAllele1);
+                                lookDistAllele2.Add(sampledBlob.lookDistAllele2);
 
                                 turnTorqueAllele1.Add(sampledBlob.turnTorqueAllele1);
                                 turnTorqueAllele2.Add(sampledBlob.turnTorqueAllele2);
-                                turnDice.Add(sampledBlob.turnDice);
-                                energyToReproduce.Add(sampledBlob.energyToReproduce);
+
+                                e2repAllele1.Add(sampledBlob.e2repAllele1);
+                                e2repAllele2.Add(sampledBlob.e2repAllele2);
+
+                                sizeAllele1.Add(sampledBlob.sizeAllele1);
+                                sizeAllele2.Add(sampledBlob.sizeAllele2);
+
+
                                 generation.Add(sampledBlob.generation);
-                                conjAge.Add(sampledBlob.conjAge);
+                                
                             }
                         }
+                        */
 
                         if (brainCheck == true)
                             for (int i = 0; i < sampleSize; i++)
@@ -137,23 +154,31 @@ private List<string[]> rowData = new List<string[]>();
                                 moveAllele1.Add(sampledBlob.moveAllele1);
                                 moveAllele2.Add(sampledBlob.moveAllele2); 
 
-                                redAllele1.Add(sampledBlob.redAllele1*10f);
-                                redAllele2.Add(sampledBlob.redAllele2*10f);
+                               redAllele1.Add(sampledBlob.redAllele1);
+                               redAllele2.Add(sampledBlob.redAllele2);
 
-                                greenAllele1.Add(sampledBlob.greenAllele1*10f);
-                                greenAllele2.Add(sampledBlob.greenAllele2*10f);
+                               greenAllele1.Add(sampledBlob.greenAllele1);
+                               greenAllele2.Add(sampledBlob.greenAllele2);
 
-                                blueAllele1.Add(sampledBlob.blueAllele1*10f);
-                                blueAllele2.Add(sampledBlob.blueAllele2*10f);
-                                LifeSpan.Add(sampledBlob.lifeLength);
+                                blueAllele1.Add(sampledBlob.blueAllele1);
+                                blueAllele2.Add(sampledBlob.blueAllele2);
+                                lifeLengthAllele1.Add(sampledBlob.lifeLengthAllele1);
+                                lifeLengthAllele2.Add(sampledBlob.lifeLengthAllele2);
                     
-                                lookDistance.Add(sampledBlob.lookDistance);
+                                lookDistAllele1.Add(sampledBlob.lookDistAllele1);
+                                lookDistAllele2.Add(sampledBlob.lookDistAllele2);
 
                                 turnTorqueAllele1.Add(sampledBlob.turnTorqueAllele1);
                                 turnTorqueAllele2.Add(sampledBlob.turnTorqueAllele2);
-                                energyToReproduce.Add(sampledBlob.energyToReproduce);
+
+                                e2repAllele1.Add(sampledBlob.e2repAllele1);
+                                e2repAllele2.Add(sampledBlob.e2repAllele2);
+
+                                sizeAllele1.Add(sampledBlob.sizeAllele1);
+                                sizeAllele2.Add(sampledBlob.sizeAllele2);
+
+
                                 generation.Add(sampledBlob.generation);
-                                conjAge.Add(sampledBlob.conjAge);
 
                             }
 
@@ -187,30 +212,35 @@ private List<string[]> rowData = new List<string[]>();
         if (itCount == 1){
             if (refCheck == true)
             {
-            rowDataTemp = new string[22];
+            rowDataTemp = new string[27];
             rowDataTemp[0] ="time" ;
             rowDataTemp[1] ="species" ;
             rowDataTemp[2] = "sampleGroup";
-            rowDataTemp[3] ="generation";
-            rowDataTemp[4] = "intron1";
-            rowDataTemp[5] = "intron2";
-            rowDataTemp[6] = "intron3";
-            rowDataTemp[7] = "intron4";
-            rowDataTemp[8] = "moveAllele1";
-            rowDataTemp[9] = "moveAllele2";
-            rowDataTemp[10] = "redAllele1";
-            rowDataTemp[11] = "redAllele2";
-            rowDataTemp[12] = "greenAllele1";
-            rowDataTemp[13] = "greenAllele2";
-            rowDataTemp[14] = "blueAllele1";
-            rowDataTemp[15] = "blueAllele2";
-            rowDataTemp[16] = "maxLifeLength";
-            rowDataTemp[17] = "lookDistance";
-            rowDataTemp[18] = "turnTorqueAllele1";
-            rowDataTemp[19] = "turnTorqueAllele2";
+            rowDataTemp[3] = "sampleNumber";
+            rowDataTemp[4] ="generation";
+            rowDataTemp[5] = "intron1";
+            rowDataTemp[6] = "intron2";
+            rowDataTemp[7] = "intron3";
+            rowDataTemp[8] = "intron4";
+            rowDataTemp[9] = "moveAllele1";
+            rowDataTemp[10] = "moveAllele2";
+            rowDataTemp[11] = "redAllele1";
+            rowDataTemp[12] = "redAllele2";
+            rowDataTemp[13] = "greenAllele1";
+            rowDataTemp[14] = "greenAllele2";
+            rowDataTemp[15] = "blueAllele1";
+            rowDataTemp[16] = "blueAllele2";
+            rowDataTemp[17] = "lifeLengthAllele1";
+            rowDataTemp[18] = "lifeLengthAllele2";
+            rowDataTemp[19] = "lookDistAllele1";
+            rowDataTemp[20] = "lookDistAllele2";
+            rowDataTemp[21] = "turnTorqueAllele1";
+            rowDataTemp[22] = "turnTorqueAllele2";
+            rowDataTemp[23] = "e2repAllele1";
+            rowDataTemp[24] = "e2repAllele2";
+            rowDataTemp[25] = "sizeAllele1";
+            rowDataTemp[26] = "sizeAllele2";
             
-            rowDataTemp[20] = "energyToReproduce";
-            rowDataTemp[21] = "conjAge";
 
             rowData.Add(rowDataTemp);
             }
@@ -218,30 +248,34 @@ private List<string[]> rowData = new List<string[]>();
             if (brainCheck == true)
 
             {
-            rowDataTemp = new string[23];
+            rowDataTemp = new string[27];
             rowDataTemp[0] ="time" ;
             rowDataTemp[1] ="species" ;
             rowDataTemp[2] = "sampleGroup";
-            rowDataTemp[3] ="generation";
-            rowDataTemp[4] = "intron1";
-            rowDataTemp[5] = "intron2";
-            rowDataTemp[6] = "intron3";
-            rowDataTemp[7] = "intron4";
-            rowDataTemp[8] = "moveAllele1";
-            rowDataTemp[9] = "moveAllele2";
-            rowDataTemp[10] = "redAllele1";
-            rowDataTemp[11] = "redAllele2";
-            rowDataTemp[12] = "greenAllele1";
-            rowDataTemp[13] = "greenAllele2";
-            rowDataTemp[14] = "blueAllele1";
-            rowDataTemp[15] = "blueAllele2";
-            rowDataTemp[16] = "maxLifeLength";
-            rowDataTemp[17] = "lookDistance";
-            rowDataTemp[18] = "turnDice";
-            rowDataTemp[19] = "turnTorqueAllele1";
-            rowDataTemp[20] = "turnTorqueAllele2";      
-            rowDataTemp[21] = "energyToReproduce";
-            rowDataTemp[22] = "conjAge";
+            rowDataTemp[3] = "sampleNumber";
+            rowDataTemp[4] ="generation";
+            rowDataTemp[5] = "intron1";
+            rowDataTemp[6] = "intron2";
+            rowDataTemp[7] = "intron3";
+            rowDataTemp[8] = "intron4";
+            rowDataTemp[9] = "moveAllele1";
+            rowDataTemp[10] = "moveAllele2";
+            rowDataTemp[11] = "redAllele1";
+            rowDataTemp[12] = "redAllele2";
+            rowDataTemp[13] = "greenAllele1";
+            rowDataTemp[14] = "greenAllele2";
+            rowDataTemp[15] = "blueAllele1";
+            rowDataTemp[16] = "blueAllele2";
+            rowDataTemp[17] = "lifeLengthAllele1";
+            rowDataTemp[18] = "lifeLengthAllele2";
+            rowDataTemp[19] = "lookDistAllele1";
+            rowDataTemp[20] = "lookDistAllele2";
+            rowDataTemp[21] = "turnTorqueAllele1";
+            rowDataTemp[22] = "turnTorqueAllele2";
+            rowDataTemp[23] = "e2repAllele1";
+            rowDataTemp[24] = "e2repAllele2";
+            rowDataTemp[25] = "sizeAllele1";
+            rowDataTemp[26] = "sizeAllele2";
 
             rowData.Add(rowDataTemp);
             }
@@ -254,30 +288,34 @@ private List<string[]> rowData = new List<string[]>();
         {   if (refCheck == true)
 
             {
-            rowDataTemp = new string[23];
-            rowDataTemp[0] = totalTime.ToString();
-            rowDataTemp[1] = "blob";
+            rowDataTemp = new string[27];
+            rowDataTemp[0] =totalTime.ToString() ;
+            rowDataTemp[1] ="blob" ;
             rowDataTemp[2] = sampleGroup.ToString();
-            rowDataTemp[3] = generation[i].ToString();
-            rowDataTemp[4] = intron1[i].ToString();
-            rowDataTemp[5] = intron2[i].ToString();
-            rowDataTemp[6] = intron3[i].ToString();
-            rowDataTemp[7] = intron4[i].ToString();
-            rowDataTemp[8] = moveAllele1[i].ToString();
-            rowDataTemp[9] = moveAllele2[i].ToString();
-            rowDataTemp[10] = redAllele1[i].ToString();
-            rowDataTemp[11] = redAllele2[i].ToString();
-            rowDataTemp[12] = greenAllele1[i].ToString();
-            rowDataTemp[13] = greenAllele2[i].ToString();
-            rowDataTemp[14] = blueAllele1[i].ToString();
-            rowDataTemp[15] = blueAllele2[i].ToString();
-            rowDataTemp[16] = LifeSpan[i].ToString();
-            rowDataTemp[17] = lookDistance[i].ToString();
-            rowDataTemp[18] = turnTorqueAllele1[i].ToString();
-            rowDataTemp[19] = turnTorqueAllele2[i].ToString();
-            rowDataTemp[20] = turnDice[i].ToString();
-            rowDataTemp[21] = energyToReproduce[i].ToString();
-            rowDataTemp[22] = conjAge[i].ToString();
+            rowDataTemp[3] = i.ToString();
+            rowDataTemp[4] = generation[i].ToString();
+            rowDataTemp[5] = intron1[i].ToString();
+            rowDataTemp[6] = intron2[i].ToString();
+            rowDataTemp[7] = intron3[i].ToString();
+            rowDataTemp[8] = intron4[i].ToString();
+            rowDataTemp[9] = moveAllele1[i].ToString();
+            rowDataTemp[10] = moveAllele2[i].ToString();
+            rowDataTemp[11] = redAllele1[i].ToString();
+            rowDataTemp[12] = redAllele2[i].ToString();
+            rowDataTemp[13] = greenAllele1[i].ToString();
+            rowDataTemp[14] = greenAllele2[i].ToString();
+            rowDataTemp[15] = blueAllele1[i].ToString();
+            rowDataTemp[16] = blueAllele2[i].ToString();
+            rowDataTemp[17] = lifeLengthAllele1[i].ToString();
+            rowDataTemp[18] = lifeLengthAllele2[i].ToString();
+            rowDataTemp[19] = lookDistAllele1[i].ToString();
+            rowDataTemp[20] = lookDistAllele2[i].ToString();
+            rowDataTemp[21] = turnTorqueAllele1[i].ToString();
+            rowDataTemp[22] = turnTorqueAllele2[i].ToString();
+            rowDataTemp[23] = e2repAllele1[i].ToString();
+            rowDataTemp[24] = e2repAllele2[i].ToString();
+            rowDataTemp[25] = sizeAllele1[i].ToString();
+            rowDataTemp[26] = sizeAllele2[i].ToString();
             
             rowData.Add(rowDataTemp);
 
@@ -285,29 +323,34 @@ private List<string[]> rowData = new List<string[]>();
             if (brainCheck == true)
 
             {
-            rowDataTemp = new string[22];
-            rowDataTemp[0] = totalTime.ToString();
-            rowDataTemp[1] = "blob";
+            rowDataTemp = new string[27];
+            rowDataTemp[0] =totalTime.ToString() ;
+            rowDataTemp[1] ="blob" ;
             rowDataTemp[2] = sampleGroup.ToString();
-            rowDataTemp[3] = generation[i].ToString();
-            rowDataTemp[4] = intron1[i].ToString();
-            rowDataTemp[5] = intron2[i].ToString();
-            rowDataTemp[6] = intron3[i].ToString();
-            rowDataTemp[7] = intron4[i].ToString();
-            rowDataTemp[8] = moveAllele1[i].ToString();
-            rowDataTemp[9] = moveAllele2[i].ToString();
-            rowDataTemp[10] = redAllele1[i].ToString();
-            rowDataTemp[11] = redAllele2[i].ToString();
-            rowDataTemp[12] = greenAllele1[i].ToString();
-            rowDataTemp[13] = greenAllele2[i].ToString();
-            rowDataTemp[14] = blueAllele1[i].ToString();
-            rowDataTemp[15] = blueAllele2[i].ToString();
-            rowDataTemp[16] = LifeSpan[i].ToString();
-            rowDataTemp[17] = lookDistance[i].ToString();
-            rowDataTemp[18] = turnTorqueAllele1[i].ToString();
-            rowDataTemp[19] = turnTorqueAllele2[i].ToString();
-            rowDataTemp[20] = energyToReproduce[i].ToString();
-            rowDataTemp[21] = conjAge[i].ToString();
+            rowDataTemp[3] = i.ToString();
+            rowDataTemp[4] = generation[i].ToString();
+            rowDataTemp[5] = intron1[i].ToString();
+            rowDataTemp[6] = intron2[i].ToString();
+            rowDataTemp[7] = intron3[i].ToString();
+            rowDataTemp[8] = intron4[i].ToString();
+            rowDataTemp[9] = moveAllele1[i].ToString();
+            rowDataTemp[10] = moveAllele2[i].ToString();
+            rowDataTemp[11] = redAllele1[i].ToString();
+            rowDataTemp[12] = redAllele2[i].ToString();
+            rowDataTemp[13] = greenAllele1[i].ToString();
+            rowDataTemp[14] = greenAllele2[i].ToString();
+            rowDataTemp[15] = blueAllele1[i].ToString();
+            rowDataTemp[16] = blueAllele2[i].ToString();
+            rowDataTemp[17] = lifeLengthAllele1[i].ToString();
+            rowDataTemp[18] = lifeLengthAllele2[i].ToString();
+            rowDataTemp[19] = lookDistAllele1[i].ToString();
+            rowDataTemp[20] = lookDistAllele2[i].ToString();
+            rowDataTemp[21] = turnTorqueAllele1[i].ToString();
+            rowDataTemp[22] = turnTorqueAllele2[i].ToString();
+            rowDataTemp[23] = e2repAllele1[i].ToString();
+            rowDataTemp[24] = e2repAllele2[i].ToString();
+            rowDataTemp[25] = sizeAllele1[i].ToString();
+            rowDataTemp[26] = sizeAllele2[i].ToString();
             
             rowData.Add(rowDataTemp);
             }
@@ -351,14 +394,19 @@ private List<string[]> rowData = new List<string[]>();
         greenAllele2.Clear();
         blueAllele1.Clear();
         blueAllele2.Clear();
-        LifeSpan.Clear();
-        lookDistance.Clear();
+        lifeLengthAllele1.Clear();
+        lifeLengthAllele2.Clear();
+        lookDistAllele1.Clear();
+        lookDistAllele2.Clear();
         turnTorqueAllele1.Clear();
         turnTorqueAllele2.Clear();
-        turnDice.Clear();
-        energyToReproduce.Clear();
+        e2repAllele1.Clear();
+        e2repAllele2.Clear();
+        sizeAllele1.Clear();
+        sizeAllele2.Clear();
+        
         generation.Clear();
-        conjAge.Clear();
+        
 
         Array.Clear(blobs,0,blobs.Length);
         time = 0f;

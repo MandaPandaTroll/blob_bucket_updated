@@ -10,6 +10,7 @@
         /// </summary>
         public class Graph : MonoBehaviour
         {
+            float e;
            public List <GameObject> blobList;
             GameObject[] blobs;
 
@@ -51,7 +52,7 @@
             {
 
                 
-                
+                e = Mathf.Exp(1);
                 mat = new Material(Shader.Find("Hidden/Internal-Colored"));
                 // Should check for material but I'll leave that to you..
 
@@ -87,9 +88,11 @@
                 }
             }
 
-            // Update is called once per frame
+            int dbugCounter;
             void Update()
             {
+                dbugCounter +=1;
+
                
                 blubs = GameObject.FindGameObjectsWithTag("ApexPred");
                  blubList = new List <GameObject>(blubs);
@@ -109,13 +112,13 @@
                float blibCount = (float)blibList.Count;
                 float totalPop = blibCount + blobCount + blybCount + blubCount;
                  
-                float scaledTotalPop = GraphScaler*(totalPop/2500f)*windowRect.height;
+                float scaledTotalPop = (Mathf.Log(totalPop+1,2)*windowRect.height/16f)-1f;
                 //a + ( x - min(x) )*(b-a) / ( max(x)-min(x) ) 
-                float scaledBlib = GraphScaler*(blibCount/2500f)*windowRect.height;
-                float scaledBlob = GraphScaler*(blobCount/400f)*windowRect.height;
-                float scaledBlyb = GraphScaler*(blybCount/400f)*windowRect.height;
-                float scaledBlub = GraphScaler*(blubCount/100f)*windowRect.height;
-
+                float scaledBlib = (Mathf.Log(blibCount+1,2)*windowRect.height/16f)-1f;
+                float scaledBlob = (Mathf.Log(blobCount+1,2)*windowRect.height/16f)-1f;
+                float scaledBlyb = (Mathf.Log(blybCount+1,2)*windowRect.height/16f)-1f;
+                float scaledBlub = (Mathf.Log(blubCount+1,2)*windowRect.height/16f)-1f;
+                
                 
                 
                 // Keep adding values
@@ -125,7 +128,10 @@
                 values4.Add(scaledBlyb);
                 values5.Add(scaledTotalPop);
                
-                
+                if (dbugCounter >= 50){
+                    Debug.Log(" scaledTotalPop "+scaledTotalPop+" scaledBlob "+scaledBlob+" scaledBlib "+scaledBlib+" scaledBlub "+scaledBlub+" scaledBlyb "+scaledBlyb);
+                    dbugCounter = 0;
+                }
             }
 
             private void OnGUI()
