@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 9185934289686911712}
   - component: {fileID: 9185934289686911713}
   - component: {fileID: -797833551166376569}
+  - component: {fileID: 73908161057658362}
+  - component: {fileID: 4982804731046927217}
   m_Layer: 8
   m_Name: brainblyb
   m_TagString: Predator2
@@ -144,6 +146,7 @@ MonoBehaviour:
   MaxStep: 512
   nomLim: 1
   rCount: 0
+  latestLookDistance: 100
 --- !u!114 &9185934289686911711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 7
+    VectorObservationSize: 55
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
@@ -166,7 +169,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: a779b6ddf43134c8b8015f4732f9b30b, type: 3}
+  m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: BrainBlyb
@@ -254,8 +257,14 @@ MonoBehaviour:
   sizeAllele1: 2
   sizeAllele2: 2
   sizeGene: 2
+  lookDistAllele1: 100
+  lookDistAllele2: 100
   lookDistance: 200
+  e2repAllele1: 0
+  e2repAllele2: 0
   energyToReproduce: 20000
+  lifeLengthAllele1: 0
+  lifeLengthAllele2: 0
   lifeLength: 500
   intron1: 100
   intron2: 100
@@ -278,3 +287,125 @@ MonoBehaviour:
   protein: 0
   proteinToReproduce: 1024
   NH4: 0
+--- !u!114 &73908161057658362
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185934289686911736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc1c9b367c53245da9d7c9e1e064b2d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pythagDist: 0
+  lineageID: []
+  greenAllele1: 0
+  greenAllele2: 0
+  greenGene: 0
+  redAllele1: 0
+  redAllele2: 0
+  redGene: 0
+  blueAllele1: 0
+  blueAllele2: 0
+  blueGene: 0
+  lookDistAllele1: 0
+  lookDistAllele2: 0
+  lookDistance: 0
+  turnTorqueAllele1: 0
+  turnTorqueAllele2: 0
+  turnTorque: 0
+  e2repAllele1: 0
+  e2repAllele2: 0
+  energyToReproduce: 0
+  moveAllele1: 0
+  moveAllele2: 0
+  moveForce: 0
+  lifeLengthAllele1: 0
+  lifeLengthAllele2: 0
+  lifeLength: 0
+  sizeAllele1: 0
+  sizeAllele2: 0
+  sizeGene: 0
+  mutate: 0
+  numMutations: 0
+  giveLocus:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  receiveLocus:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  mother: {fileID: 0}
+  chromoPairs: 0
+  basePairs: 0
+  randGenome: 0
+  loSite: 0
+  cNum: 0
+  locus: 0
+--- !u!114 &4982804731046927217
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9185934289686911736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 362867aab160d45adb67c2415596945a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scaledPreyDistance: []
+  scaledMateDistance: []
+  scaledApexPredDistance: []
+  proteinToReproduce: 256
