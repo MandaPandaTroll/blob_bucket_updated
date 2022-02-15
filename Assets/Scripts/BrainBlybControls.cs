@@ -10,7 +10,10 @@ public class BrainBlybControls : MonoBehaviour
 {
 
 public string[,] superSatellite = new string[4,27] {
-    
+    //VAGGARN
+    {"A","T","G",  "G","T","T",  "G","C","T", 
+     "G","G","T",  "G","G","T",  "G","C","T",
+     "C","G","T",  "A","A","T",  "T","G","A"},
     
     //RASKARE
     {"A","T","G",  "C","G","T",  "G","C","T", 
@@ -21,16 +24,10 @@ public string[,] superSatellite = new string[4,27] {
      "C","G","T",  "C","T","T",  "G","C","T",
      "C","G","T",  "T","C","T",  "T","G","A"},
     
-    //GAPANDE
-    {"A","T","G",  "G","G","T",  "G","C","T", 
-     "C","C","T",  "G","C","T",  "A","A","T",
-     "G","A","T",  "G","A","A",  "T","G","A"},
-
-     //REDNING
-    {"A","T","G",  "C","G","T",  "G","A","A", 
-     "G","A","T",  "A","A","T",  "A","T","T",
-     "A","A","T",  "G","G","T",  "T","G","A"},
-
+    //SYSTERN
+    {"A","T","G",  "T","C","T",  "T","A","T", 
+     "T","C","T",  "A","C","T",  "G","A","A",
+     "C","G","T",  "A","A","T",  "T","G","A"},
 };
 
 
@@ -63,7 +60,7 @@ public float speciationDistance;
     public float maxEnergy;
     public float eCost;
 
-    public float conjAge;
+    public float conjAge =0;
 
  
 System.Random rndA = new System.Random();
@@ -77,12 +74,14 @@ System.Random rndA = new System.Random();
     public float turnTorque;
     public float turnTorqueAllele1;
     public float turnTorqueAllele2;
-    public float sizeAllele1, sizeAllele2, sizeGene;
 
-    public float lookDistance;
+    public float lookDistAllele1 = 100f, lookDistAllele2 = 100f;
+    public float lookDistance = 100f;
+
+    public float e2repAllele1, e2repAllele2;
     public float  energyToReproduce;
     
-    
+    public float lifeLengthAllele1, lifeLengthAllele2;
     public float lifeLength;
     public float intron1;
     public float intron2;
@@ -105,38 +104,77 @@ System.Random rndA = new System.Random();
     public int protein;
     public int proteinToReproduce;
     public int NH4;
-        nutGrid m_nutgrid;
+
+    nutGrid m_nutgrid;
+
+    BlybGenome genome;
 
 
+void Awake(){
+    
+}
     // Start is called before the first frame update
     void Start()
     {   
-        age = 0;
+        
+        genome = this.gameObject.GetComponent<BlybGenome>();
+        
         rCount = 0;
         eaten = false;
         alive = true;
         hasReproduced = false;
         m_SpriteRenderer = GetComponent<SpriteRenderer>();
         moveForce = (moveAllele1 + moveAllele2)/2.0f;
-        geneticColor = m_SpriteRenderer.color;
+        
         rb = GetComponent<Rigidbody2D>();
 
+        redAllele1 = genome.redAllele1;
+        redAllele2 = genome.redAllele2;
+        redGene = (redAllele1 + redAllele2)/2f;
 
+        greenAllele1 = genome.greenAllele1;
+        greenAllele2 = genome.greenAllele2;
+        greenGene = (greenAllele1 + greenAllele2)/2f;
 
-        redGene = geneticColor.r;
-        greenGene = geneticColor.g;
-        blueGene = geneticColor.b;
+        blueAllele1 = genome.blueAllele1;
+        blueAllele2 = genome.blueAllele2;
+        blueGene = (blueAllele1 + blueAllele2)/2f;
 
-        redAllele1 = redGene;
-        redAllele2 = redGene;
-        greenAllele1 = greenGene;
-        greenAllele2 = greenGene;
-        blueAllele1 = blueGene;
-        blueAllele2 = blueGene;
+        moveAllele1 = genome.moveAllele1;
+        moveAllele2 = genome.moveAllele2;
+        if(moveAllele1 != 0 && moveAllele2 != 0){
+    moveForce = (moveAllele1 + moveAllele2)/2f;
+    }
+        
 
-        redGene = (redAllele1+redAllele2)/2.0f;
-        greenGene = (greenAllele1+greenAllele2)/2.0f;
-        blueGene = (blueAllele1+blueAllele2)/2.0f;
+        turnTorqueAllele1 = genome.turnTorqueAllele1;
+        turnTorqueAllele2 = genome.turnTorqueAllele2;
+        turnTorque = (turnTorqueAllele1 + turnTorqueAllele2)/2f;
+        sizeAllele1 = genome.sizeAllele1;
+        sizeAllele2 = genome.sizeAllele2;
+        sizeGene = (sizeAllele1+sizeAllele2)/2f;
+
+        e2repAllele1 = genome.e2repAllele1;
+        e2repAllele2 = genome.e2repAllele2;
+        energyToReproduce = (e2repAllele1 + e2repAllele2)/2f;
+
+        lookDistAllele1 = genome.lookDistAllele1;
+        lookDistAllele2 = genome.lookDistAllele2;
+        lookDistance = (lookDistAllele1 + lookDistAllele2)/2f;
+
+        lifeLengthAllele1 = genome.lifeLengthAllele1;
+        lifeLengthAllele2 = genome.lifeLengthAllele2;
+        lifeLength = (lifeLengthAllele1 + lifeLengthAllele2)/2f;
+    
+
+                    colorR = redGene;
+                    colorG = greenGene;
+                    colorB = blueGene;
+
+                    geneticColor = new Color(colorR, colorG, colorB, colorA);
+                    m_SpriteRenderer.color = geneticColor;
+
+        
         m_nutgrid =GameObject.Find("Testing").GetComponent<Testing>().nutgrid;
 
         
@@ -144,11 +182,12 @@ System.Random rndA = new System.Random();
     }
 
 
-    float NH4_Timer;
+
     // Update is called once per frame
     void LateUpdate()
     {   
-        
+        Vector2 brownian = new Vector2 (Random.Range(-1.0f,1.0f),Random.Range(-1.0f,1.0f));
+        rb.AddForce(brownian);
         if(Time.time < 0.1f && initDiversity != 0.0f){InitDiversifier(); }
         
         pEnergy = energy;
@@ -165,7 +204,7 @@ System.Random rndA = new System.Random();
             Dead();
         }
     if(alive == true)
-    {
+    {   
         NH4_Timer += Time.deltaTime;
         if (NH4_Timer >= 1f && protein > 1)
         {
@@ -181,11 +220,11 @@ System.Random rndA = new System.Random();
                 NH4 = 0;
         }
         eCost = rb.mass/eCostCo;
-        energy -= basalMet;
-        int dC = (int) ( (lifeLength*Mathf.Pow((3f*lifeLength/age),2f)) - (9f*lifeLength) );
+        
+        int dC = (int) ( (lifeLength*Mathf.Pow((3f*lifeLength/(age+1)),2f)) - (9f*lifeLength) );
         deathDice = Random.Range(1,dC);
                 // rCo = 10 + (L/a)^2
-       int rCo = 10 + (int)Mathf.Pow((lifeLength/(age+1)),2f); 
+       int rCo = 10 + (int)Mathf.Pow((lifeLength/age),2f); 
         
         rDice = Random.Range(1, rCo);
         
@@ -207,7 +246,7 @@ System.Random rndA = new System.Random();
             if  ( energy <= 100f || age > lifeLength || deathDice == 1)
             {
                 
-                alive = false;
+                alive = false;               
                    
             }
             
@@ -232,14 +271,13 @@ System.Random rndA = new System.Random();
     }
 
             void Dead()
-        {   
-            this.gameObject.GetComponent<BrainBlyb>().enabled = false;
+        {   this.gameObject.GetComponent<BrainBlyb>().enabled = false;
             energy -= 10f*Time.deltaTime;
             int posval = m_nutgrid.GetValue(transform.position);
                 m_nutgrid.SetValue(transform.position, posval + 1);
                 protein -= 1;
             if(energy <= 0f && protein <= 0)
-            {
+            { 
                 Destroy(this.gameObject,0.2f);
             }
 
@@ -250,15 +288,10 @@ System.Random rndA = new System.Random();
                 GameObject booper = col.gameObject;
              if(alive == false)
                 {   
-                    if(booper.tag == ("ApexPred"))
-                    {
-                        energy = 0;
-                        protein = 0;
-                    }
+                    
 
-                    energy = 0;
+                    energy = 0 ;
                     protein = 0;
-                    NH4 = 0;
                 }
 
             if( alive == true){
@@ -266,21 +299,18 @@ System.Random rndA = new System.Random();
                 {               
                     if(booper.layer == 6)
                     {
-                        energy += (booper.GetComponent<BrainBlobControls>().pEnergy);
-                        protein += (booper.GetComponent<BrainBlobControls>().protein);
-                        NH4 += (booper.GetComponent<BrainBlobControls>().NH4);
+                        energy += (booper.GetComponent<BrainBlybControls>().pEnergy);
+                        protein += (booper.GetComponent<BrainBlybControls>().protein);
                     }
                     if(booper.layer == 7)
                     {
                         energy += (booper.GetComponent<BrainBlubControls>().pEnergy);
                         protein += (booper.GetComponent<BrainBlubControls>().protein);
-                        NH4 += (booper.GetComponent<BrainBlubControls>().NH4);
                     }
                     if(booper.layer == 8)
                     {
                         energy += (booper.GetComponent<BrainBlybControls>().pEnergy);
-                        protein += (booper.GetComponent<BrainBlybControls>().protein);
-                        NH4 += (booper.GetComponent<BrainBlybControls>().NH4);
+                        protein += (booper.GetComponent<BrainBlybControls>().protein);           
                     }
                     
                     nom = true; 
@@ -298,81 +328,7 @@ System.Random rndA = new System.Random();
 
                 if(booper.tag == "Predator2")
                 {
-                    mate = booper.GetComponent<BrainBlybControls>();
-                    float distColR1 = Mathf.Abs(((float)redAllele1 - (float)mate.redAllele1));
-                    float distColR2 = Mathf.Abs(((float)redAllele2 - (float)mate.redAllele2));
-                    float distColG1 = Mathf.Abs(((float)greenAllele1 - (float)mate.greenAllele1));
-                    float distColG2 = Mathf.Abs(((float)greenAllele2 - (float)mate.greenAllele2));
-                    float distColB1 = Mathf.Abs(((float)blueAllele1 - (float)mate.blueAllele1));
-                    float distColB2 = Mathf.Abs(((float)blueAllele2 - (float)mate.blueAllele2));
-                    geneticDistance = (distColR1 + distColR2 + distColG1 + distColG2 + distColB1 + distColB2)/6f;
-                    if(geneticDistance < speciationDistance)
-                    {
-                    moveAllele1 = (moveAllele1 + mate.moveAllele1)/2.0f;
-                    moveAllele2 = (moveAllele2 + mate.moveAllele2)/2.0f;
-
-                    turnTorqueAllele1 = (turnTorqueAllele1 + mate.turnTorqueAllele1)/2;
-                    turnTorqueAllele2 = (turnTorqueAllele2 + mate.turnTorqueAllele2)/2;
-
-                    sizeAllele1 = (sizeAllele1 + mate.sizeAllele1)/2f;
-                    sizeAllele2 = (sizeAllele2 + mate.sizeAllele2)/2f;
-                    sizeGene = (sizeAllele1+sizeAllele2)/2f;
                     
-                    lookDistance = (lookDistance + mate.lookDistance)/2f;
- 
-                    energyToReproduce = (energyToReproduce + mate.energyToReproduce)/2.0f;
-                    lifeLength = (lifeLength + mate.lifeLength)/2.0f;
-
-                    intron1 = (intron1 + mate.intron1)/2f;
-                    intron2 = (intron2 + mate.intron2)/2f;
-                    intron3 = (intron3 + mate.intron3)/2f;
-                    intron4 = (intron4 + mate.intron4)/2f;
-
-                    redAllele1   = (redAllele1 + mate.redAllele1)/2.0f;
-                    redAllele2   = (redAllele1 + mate.redAllele1)/2.0f;
-                    greenAllele1 = (greenAllele1 + mate.greenAllele1)/2.0f;
-                    greenAllele2 = (greenAllele1 + mate.greenAllele1)/2.0f;
-                    blueAllele1  = (blueAllele1 + mate.blueAllele1)/2.0f;
-                    blueAllele2  = (blueAllele1 + mate.blueAllele1)/2.0f;
-
-                    redGene = (redAllele1+redAllele2)/2.0f;
-                    greenGene = (greenAllele1+greenAllele2)/2.0f;
-                    blueGene = (blueAllele1+blueAllele2)/2.0f;
-
-                    conjAge = (conjAge + mate.conjAge)/2f;
-
-        if(redAllele1 < 0.0f){redAllele1 = 0.0f;}
-        if(redAllele2 < 0.0f){redAllele2 = 0.0f;}
-        if(greenAllele1 < 0.0f){greenAllele1 = 0.0f;}
-        if(greenAllele2 < 0.0f){greenAllele2 = 0.0f;}
-        if(blueAllele1 < 0.0f){blueAllele1 = 0.0f;}
-        if(blueAllele2 < 0.0f){blueAllele2 = 0.0f;}
-
-                    if(redAllele1 > 1.0f){redAllele1 = 1.0f;}
-                    if(redAllele2 > 1.0f){redAllele2 = 1.0f;}
-                    if(greenAllele1 > 1.0f){greenAllele1 = 1.0f;}
-                    if(greenAllele2 > 1.0f){greenAllele2 = 1.0f;}
-                    if(blueAllele1 > 1.0f){blueAllele1 = 1.0f;}
-                    if(blueAllele2 > 1.0f){blueAllele2 = 1.0f;}
-
-                    if (redGene < 0.0f){
-                        redGene = 0.0f;
-                    }
-                    if (redGene > 1.0f){
-                        redGene = 1.0f;
-                    }
-                    if (greenGene < 0.0f){
-                        greenGene = 0.0f;
-                    }
-                    if (greenGene > 1.0f){
-                        greenGene = 1.0f;
-                    }
-                    if (blueGene < 0.0f){
-                        blueGene = 0.0f;
-                    }
-                    if (blueGene > 1.0f){
-                        blueGene = 1.0f;
-                    }
                     
                     colorR = redGene;
                     colorG = greenGene;
@@ -380,7 +336,7 @@ System.Random rndA = new System.Random();
 
                     geneticColor = new Color(colorR, colorG, colorB, colorA);
                     m_SpriteRenderer.color = geneticColor;
-                    }
+                    
 
                     }
                 
@@ -438,52 +394,13 @@ System.Random rndA = new System.Random();
                             randNosA.Add(rndA.Next(-1,2));
                         }
 
-                    GameObject clone;
-
-                    //Mutation
-                    moveAllele1 += (float)randNosA[0]*rndA.Next(2);
-                    moveAllele2 += (float)randNosA[1]*rndA.Next(2);
-                    lifeLength += (float)randNosA[2]*rndA.Next(2);
-                    moveForce = (moveAllele1 + moveAllele2)/2.0f;
-
-                    turnTorqueAllele1 += (float)randNosA[3]*rndA.Next(2);
-                    turnTorqueAllele2 += (float)randNosA[4]*rndA.Next(2);
-                    turnTorque = (turnTorqueAllele1 + turnTorqueAllele2)/2.0f;
-                    lookDistance += (float)randNosA[5]*rndA.Next(2);
-                    energyToReproduce += (float)randNosA[5]*rndA.Next(2);
                     
 
-                    intron1 += randNosA[6]*rndA.Next(2);
-                    intron2 += randNosA[7]*rndA.Next(2);
-                    intron3 += randNosA[8]*rndA.Next(2);
-                    intron4 += randNosA[9]*rndA.Next(2);
-
-                    redAllele1   += (float)randNosA[10]*rndA.Next(2)*0.01f;
-                    redAllele2   += (float)randNosA[11]*rndA.Next(2)*0.01f;
-                    greenAllele1 += (float)randNosA[12]*rndA.Next(2)*0.01f;
-                    greenAllele2 += (float)randNosA[13]*rndA.Next(2)*0.01f;
-                    blueAllele1  += (float)randNosA[14]*rndA.Next(2)*0.01f;
-                    blueAllele2  += (float)randNosA[15]*rndA.Next(2)*0.01f;
-
-                    sizeAllele1 += (float)(rndA.Next(-1,2))*0.01f;
-                    sizeAllele2 += (float)(rndA.Next(-1,2))*0.01f;
-
-                    conjAge += (float)randNosA[16]*rndA.Next(2);
+                    //Mutation
+                    
 
 
-                    if(redAllele1 < 0.0f){redAllele1 = 0.0f;}
-                    if(redAllele2 < 0.0f){redAllele2 = 0.0f;}
-                    if(greenAllele1 < 0.0f){greenAllele1 = 0.0f;}
-                    if(greenAllele2 < 0.0f){greenAllele2 = 0.0f;}
-                    if(blueAllele1 < 0.0f){blueAllele1 = 0.0f;} 
-                    if(blueAllele2 < 0.0f){blueAllele2 = 0.0f;}
-
-                    if(redAllele1 > 1.0f){redAllele1 = 1.0f;}
-                    if(redAllele2 > 1.0f){redAllele2 = 1.0f;}
-                    if(greenAllele1 > 1.0f){greenAllele1 = 1.0f;}
-                    if(greenAllele2 > 1.0f){greenAllele2 = 1.0f;}
-                    if(blueAllele1 > 1.0f){blueAllele1 = 1.0f;}
-                    if(blueAllele2 > 1.0f){blueAllele2 = 1.0f;} 
+                    
 
                     redGene = (redAllele1+redAllele2)/2.0f;
                     greenGene = (greenAllele1+greenAllele2)/2.0f;
@@ -491,24 +408,7 @@ System.Random rndA = new System.Random();
 
 
 
-                    if (redGene < 0.0f){
-                        redGene = 0.0f;
-                    }
-                    if (redGene > 1.0f){
-                        redGene = 1.0f;
-                    }
-                    if (greenGene < 0.0f){
-                        greenGene = 0.0f;
-                    }
-                    if (greenGene > 1.0f){
-                        greenGene = 1.0f;
-                    }
-                    if (blueGene < 0.0f){
-                        blueGene = 0.0f;
-                    }
-                    if (blueGene > 1.0f){
-                        blueGene = 1.0f;
-                    }
+                    
                     
                     colorR = redGene;
                     colorG = greenGene;
@@ -520,12 +420,12 @@ System.Random rndA = new System.Random();
 
                     //Reproduction
                     energy = (energy/2.0f);
-                    protein = protein/2;
+                    protein = (protein/2)-1;
                     
                 
                 float x = energy/10000f;
                 float k = 0.7f;
-                sigmoid = sizeGene/ (1f+ Mathf.Exp(-k*(x-1.5f)));
+                sigmoid = 4f/ (1f+ Mathf.Exp(-k*(x-1.5f)));
                 newSize = new Vector3(sigmoid,sigmoid,sigmoid);
                 transform.localScale = newSize;
                     maxEnergy = sigmoid*25000f;
@@ -540,10 +440,20 @@ System.Random rndA = new System.Random();
                             energyToReproduce 
                                     );
                     }
+                    GameObject daughter = Instantiate(this.gameObject);
+                    daughter.GetComponent<BlybGenome>().mother = genome;
+                    BrainBlybControls daughter_controls = daughter.GetComponent<BrainBlybControls>();
+                    daughter_controls.generation = generation + 1;
+                    daughter_controls.age = 0f;
                     
-                    clone = Instantiate(this.gameObject);
-                    clone.GetComponent<BrainBlybControls>().generation +=1;
-                    clone.GetComponent<BrainBlybControls>().age = 0f;
+                    
+                    
+                    
+                    
+                    
+                     daughter.GetComponent<BlybGenome>().mutate = true;
+
+
                     rCount += 1;
                         
                         
@@ -561,62 +471,68 @@ System.Random rndA = new System.Random();
             {
                 float x = energy/10000;
                 float k = 0.7f;
-                sigmoid = 4f/ (1f+ Mathf.Exp(-k*(x-1.5f)));
+                sigmoid = sizeGene/ (1f+ Mathf.Exp(-k*(x-1.5f)));
                 newSize = new Vector3(sigmoid,sigmoid,sigmoid);
                 transform.localScale = newSize;
                 maxEnergy = sigmoid*25000f;
+
+
+                     
+
+
+
+
             }
 
         void InitDiversifier()
         {
                        
+                redAllele1 = genome.redAllele1;
+        redAllele2 = genome.redAllele2;
+        redGene = (redAllele1 + redAllele2)/2f;
 
-                    //Mutation
-                    moveAllele1 += (float)rndA.Next(-1,2)*initDiversity;
-                    moveAllele2 += (float)rndA.Next(-1,2)*initDiversity;
-                    lifeLength += (float)rndA.Next(-1,2)*initDiversity;
-                    moveForce = (moveAllele1 + moveAllele2)/2.0f;
+        greenAllele1 = genome.greenAllele1;
+        greenAllele2 = genome.greenAllele2;
+        greenGene = (greenAllele1 + greenAllele2)/2f;
 
-                    turnTorqueAllele1 += (float)(rndA.Next(-1,2)*initDiversity);
-                    turnTorqueAllele2 += (float)(rndA.Next(-1,2)*initDiversity);
-                    turnTorque = (turnTorqueAllele1 + turnTorqueAllele2)/2.0f;
+        blueAllele1 = genome.blueAllele1;
+        blueAllele2 = genome.blueAllele2;
+        blueGene = (blueAllele1 + blueAllele2)/2f;
 
-                    lookDistance += (float)rndA.Next(-1,2)*initDiversity;
-                    energyToReproduce += (float)rndA.Next(-1,2)*initDiversity;
+        moveAllele1 = genome.moveAllele1;
+        moveAllele2 = genome.moveAllele2;
+        if(moveAllele1 != 0 && moveAllele2 != 0){
+    moveForce = (moveAllele1 + moveAllele2)/2f;
+    }
 
-                    sizeAllele1 += (float)(rndA.Next(-1,2)*initDiversity)*0.01f;
-                    sizeAllele2 += (float)(rndA.Next(-1,2)*initDiversity)*0.01f;
-                    sizeGene = (sizeAllele1+sizeAllele2)/2f;
+        turnTorqueAllele1 = 1f + genome.turnTorqueAllele1;
+        turnTorqueAllele2 = 1f + genome.turnTorqueAllele2;
+        turnTorque = (turnTorqueAllele1 + turnTorqueAllele2)/2f;
 
-                    intron1 += (float)(rndA.Next(-1,2)*initDiversity);
-                    intron2 += (float)(rndA.Next(-1,2)*initDiversity);
-                    intron3 += (float)(rndA.Next(-1,2)*initDiversity);
-                    intron4 += (float)(rndA.Next(-1,2)*initDiversity);
+        sizeAllele1 = genome.sizeAllele1;
+        sizeAllele2 = genome.sizeAllele2;
+        sizeGene = (sizeAllele1+sizeAllele2)/2f;
 
-                    redAllele1   += (float)(rndA.Next(-1,2)*0.01f*initDiversity);
-                    redAllele2   += (float)(rndA.Next(-1,2)*0.01f*initDiversity);
-                    greenAllele1 += (float)(rndA.Next(-1,2)*0.01f*initDiversity);
-                    greenAllele2 += (float)(rndA.Next(-1,2)*0.01f*initDiversity);
-                    blueAllele1  += (float)(rndA.Next(-1,2)*0.01f*initDiversity);
-                    blueAllele2  += (float)(rndA.Next(-1,2)*0.01f*initDiversity);
+        e2repAllele1 = 1f + genome.e2repAllele1;
+        e2repAllele2 = 1f + genome.e2repAllele2;
+        energyToReproduce = (e2repAllele1 + e2repAllele2)/2f;
 
-                    if(redAllele1 < 0.0f){redAllele1 = 0.0f;}
-                    if(redAllele2 < 0.0f){redAllele2 = 0.0f;}
-                    if(greenAllele1 < 0.0f){greenAllele1 = 0.0f;}
-                    if(greenAllele2 < 0.0f){greenAllele2 = 0.0f;}
-                    if(blueAllele1 < 0.0f){blueAllele1 = 0.0f;}
-                    if(blueAllele2 < 0.0f){blueAllele2 = 0.0f;}
+        lookDistAllele1 = 1f + genome.lookDistAllele1;
+        lookDistAllele2 = 1f + genome.lookDistAllele2;
+        lookDistance = (lookDistAllele1 + lookDistAllele2)/2f;
 
-                    if(redAllele1 > 1.0f){redAllele1 = 1.0f;}
-                    if(redAllele2 > 1.0f){redAllele2 = 1.0f;}
-                    if(greenAllele1 > 1.0f){greenAllele1 = 1.0f;}
-                    if(greenAllele2 > 1.0f){greenAllele2 = 1.0f;}
-                    if(blueAllele1 > 1.0f){blueAllele1 = 1.0f;}
-                    if(blueAllele2 > 1.0f){blueAllele2 = 1.0f;}
+        lifeLengthAllele1 = 1f + genome.lifeLengthAllele1;
+        lifeLengthAllele2 = 1f + genome.lifeLengthAllele2;
+        lifeLength = (lifeLengthAllele1 + lifeLengthAllele2)/2f;
+    
+
+                    colorR = redGene;
+                    colorG = greenGene;
+                    colorB = blueGene;
+
+                    geneticColor = new Color(colorR, colorG, colorB, colorA);
+                    m_SpriteRenderer.color = geneticColor;
                     
-                    redGene = (redAllele1+redAllele2)/2.0f;
-                    greenGene = (greenAllele1+greenAllele2)/2.0f;
-                    blueGene = (blueAllele1+blueAllele2)/2.0f;
 
 
 
